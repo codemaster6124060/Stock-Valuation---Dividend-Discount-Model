@@ -20,7 +20,7 @@ tic = 'V' #input any ticker from any industry
 # Stock valuation using Dividend Discount Model
 #-----------------------------------------------------------------------------#
 
-def intrinsic_value(terminalgrowth):
+def intrinsic_value(terminalgrowth,T):
     data = yf.Ticker(tic)
     company = data.info['shortName']
     industry = data.info['industry']
@@ -98,7 +98,7 @@ def intrinsic_value(terminalgrowth):
     t=1
     sum = 0
     yf_data = []
-    for i in range(5):
+    for i in range(T):
         div=float(div0)*(1+g)**(i+t)
         iv=div/(1+r)**(i+t)
         sum = sum+iv
@@ -119,7 +119,7 @@ def intrinsic_value(terminalgrowth):
     ax.set_title('Actual and Forecasted Dividends of Ford Motor Company')
     plt.show()
     print(f'The market consensus for the terminal growth of {company}: {round(terminalgrowth*100,2)}%.')
-    terminalvalue = div*(1+terminalgrowth)/(r-terminalgrowth)
+    terminalvalue = (div*(1+terminalgrowth)/(r-terminalgrowth))/(1+r)**T
     intrinsvalue = float(np.array(sum+terminalvalue))
     print(f'Risk-free rate (10-yr T-bond rate): {round(rf,2)*100}%')
     print(f'Stock beta: {round(b,2)}')
@@ -142,4 +142,4 @@ def intrinsic_value(terminalgrowth):
         
         print('\x1b[42m'+f'Upside potential: {round((intrinsvalue/currentprice-1)*100,2)}%'+'\x1b[42m')
         print('\x1b[42m'+f'{company} is undervalued!!! So, i give BUY recommendation for the stock.'+'\x1b[42m')
-intrinsic_value(0.0165)
+intrinsic_value(0.0165,5)
