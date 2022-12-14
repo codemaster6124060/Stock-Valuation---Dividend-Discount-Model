@@ -4,7 +4,7 @@ Created on Sat Apr 16 21:08:49 2022
 
 @author: banik
 """
-
+# Import necessary libraries
 import numpy as np
 import pandas as pd
 import yfinance as yf
@@ -17,10 +17,13 @@ import datetime
 from datetime import date
 from yahoofinancials import YahooFinancials
 
-fred = Fred(api_key='0bbc318d3ba2efaf9d4e56708954067d')
+fred = Fred(api_key='Enter your FRED API Key')
+
+# Set timeline
 d1 = date.today()
 d0 = d1 - relativedelta(years=5)
 
+# Read stock tickers
 all = ('ATVI', 'ALL','BAC','CBRE','CVX','CVS','DG','LLY','HSY','HUN',
        'INTC','LULU','MSFT','NOC','PXD','PLD','PAYX','TMUS','TRTN','WMT','WRK','UNH')
 
@@ -411,56 +414,6 @@ def intrinsic_value(terminalgrowth,T,sector,n,tax_rate,avg_corp_loan_rate):
         wd = yf.Ticker(sector[n]).info['debtToEquity']/(yf.Ticker(sector[n]).info['debtToEquity']+1)
         we = 1 - wd
         r = wd*(1-tax_rate)*rd+we*re
-        # g_noips1 = float(input(f'NOI growth rate in 2022:'))
-        # g_noips2 = float(input(f'NOI growth rate in 2023:'))
-        # g_noips3 = float(input(f'NOI growth rate in 2024:'))
-        # g_noips4 = float(input(f'NOI growth rate in 2025:'))
-        # g_noips5 = float(input(f'NOI growth rate in 2026:'))
-        # g_noips6 = float(input(f'NOI growth rate in 2027:'))
-        # g_noips7 = float(input(f'NOI growth rate in 2028:'))
-        # g_noips8 = float(input(f'NOI growth rate in 2029:'))
-        # g_noips9 = float(input(f'NOI growth rate in 2030:'))
-        # g_noips10 = float(input(f'NOI growth rate in 2031:'))
-        # noips1 = noips0*(1+g_noips1)
-        # noips2 = noips1*(1+g_noips2)
-        # noips3 = noips2*(1+g_noips3)
-        # noips4 = noips3*(1+g_noips4)
-        # noips5 = noips4*(1+g_noips5)
-        # noips6 = noips5*(1+g_noips6)
-        # noips7 = noips6*(1+g_noips7)
-        # noips8 = noips7*(1+g_noips8)
-        # noips9 = noips8*(1+g_noips9)
-        # noips10 = noips9*(1+g_noips10)
-        # cf = (noips3/(1+r)**1) + (noips4/(1+r)**2) + (noips5/(1+r)**3) + (noips6/(1+r)**4) 
-        # + (noips7/(1+r)**5) + (noips8/(1+r)**6) + (noips9/(1+r)**7) + (noips10/(1+r)**8)
-        # sum = 0
-        
-        # yf_data = []
-        # for i in range(3,T):                       
-        #     sum = sum+cf
-        #     if i>7:
-        #         print(f'Expected net operating income per share in 203{i-8}: ${round(noips,2)}')
-        #     else:
-        #         print(f'Expected net operating income per share in 202{i+2}: ${round(noips,2)}')
-        #     yf_data.append([noips])
-        # df = pd.DataFrame(yf_data,columns={'Net operating income per share'})
-        # df = df.transpose()
-        # df = pd.DataFrame([[noips1,noips2,noips3,noips4,noips5,noips6,noips7,noips8,noips9,noips10]])
-        # df.columns = ['2022E','2023E','2024E','2025E','2026E','2027E','2028E','2029E','2030E','2031E']
-        # df['2021A'] = noips0
-        # df = df[['2021A','2022E','2023E','2024E','2025E','2026E','2027E','2028E','2029E','2030E','2031E']]
-        # fig, ax = plt.subplots(figsize=(10,4))
-        # ax.bar(df.columns[0],df['2021A'],width=0.7,color = 'lightcoral')
-        # ax.bar(df.columns[1],df['2022E'],width=0.7,color = 'lightcoral')
-        # ax.bar(df.columns[2],df['2023E'],width=0.7,color = 'lightcoral')
-        # ax.bar(df.columns[3],df['2024E'],width=0.7,color = 'dodgerblue')
-        # ax.bar(df.columns[4],df['2025E'],width=0.7,color = 'dodgerblue')
-        # ax.bar(df.columns[5],df['2026E'],width=0.7,color = 'dodgerblue')
-        # ax.bar(df.columns[6],df['2027E'],width=0.7,color = 'dodgerblue')
-        # ax.bar(df.columns[7],df['2028E'],width=0.7,color = 'dodgerblue')
-        # ax.bar(df.columns[8],df['2029E'],width=0.7,color = 'dodgerblue')
-        # ax.bar(df.columns[9],df['2030E'],width=0.7,color = 'dodgerblue')
-        # ax.bar(df.columns[10],df['2031E'],width=0.7,color = 'dodgerblue')
         cf = (forecast.iloc[1,3]/(1+r)**1) + (forecast.iloc[1,4]/(1+r)**2) + (forecast.iloc[1,5]/(1+r)**3) + (forecast.iloc[1,6]/(1+r)**4) 
         + (forecast.iloc[1,7]/(1+r)**5) + (forecast.iloc[1,8]/(1+r)**6) + (forecast.iloc[1,9]/(1+r)**7) + (forecast.iloc[1,10]/(1+r)**8)
         fig, ax = plt.subplots(figsize=(10,4))
